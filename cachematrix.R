@@ -13,8 +13,11 @@ makeCacheMatrix <- function(x = matrix()) {
     invMatrix <<- NULL  
   }
   
+  ## Get input matrix
   get <- function() x
   setInV <- function(inverse) invMatrix <<- inverse
+  
+  ## Get inverse matrix
   getInv <- function() invMatrix
   list(set = set, get = get, setInv = setInv, getInv = getInv)
 }
@@ -24,13 +27,17 @@ makeCacheMatrix <- function(x = matrix()) {
 
 cacheSolve <- function(x, ...) {
   
+  ## Return a matrix that is the inverse of 'x'
   invMatrix <- x$getInv()
   
   if (!is.null(invMatrix))
   {
+    #If exits, we get cached instead of recalculating it
     message("cached inverse")
     return(invMatrix)
   }
+  
+  #if not exists, the inverse matrix is be calculated
   
   newMatrix <- x$get()
   invMatrix <- inverse(newMatrix)
